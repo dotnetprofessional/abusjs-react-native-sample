@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "declaration": false,
+        "noResolve": false,
+        "jsx": "react",
+        "module": "commonjs",
+        "target": "es6",
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "outDir": "lib"
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
