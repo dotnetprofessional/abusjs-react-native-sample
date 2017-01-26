@@ -3,7 +3,7 @@ import { WorkflowResultCommand, WorkflowResult } from "../Config";
 import { NavigationCommand } from "../Infrastructure/Navigation";
 import { SplashScreen, BootstrapProcess, MainScreen, AuthenticationProcess, SignIn } from "../Screens";
 import { Store } from "../Config/Store";
-import { NavigationContext } from "../Host";
+import { WorkflowContext } from "../Host";
 
 /**
  * Defines how components talk to each other
@@ -31,17 +31,16 @@ export class Workflow {
      * @memberOf Workflow
      */
     public start() {
-        this.workflowCommandHandler(new WorkflowResult(), new MessageHandlerContext(this.bus));
+        this.context = new MessageHandlerContext(this.bus);
+        this.workflowCommandHandler(new WorkflowResult(), this.context);
     }
 
     navigate(screen: string) {
-        // find out what the subscribers are!
-        let count = Bus.instance.subscriberCount(NavigationCommand.TYPE);
         this.context.sendAsync(new NavigationCommand(screen));
     }
 
     executeProcess<T>(processCommand: T): T {
-        (processCommand as any).context = new NavigationContext(this.bus, processCommand.constructor.name);
+        (processCommand as any).context = new WorkflowContext(this.context, processCommand.constructor.name);
         return processCommand;
     }
 

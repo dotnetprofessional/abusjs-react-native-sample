@@ -1,3 +1,3 @@
 export { INavigationComponent } from './INavigationComponent'
-export { NavigationCommand } from './NavigateCommand'
+export { NavigationCommand, OpenDialogCommand } from './NavigateCommand'
 export { NavigationRequest } from './NavigationRequest'

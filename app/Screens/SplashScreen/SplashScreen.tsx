@@ -5,9 +5,9 @@ import {
     TouchableHighlight
 } from "react-native";
 
-import { NavProps} from "../../Host";
+import { ScreenProps} from "../../Host";
 
-export class SplashScreen extends React.Component<NavProps, any> {
+export class SplashScreen extends React.Component<ScreenProps, any> {
 
     public static processName = "SplashScreen";
      

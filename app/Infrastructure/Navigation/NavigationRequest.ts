@@ -1,3 +1,4 @@
 export class NavigationRequest {
-    screen: string;
+    name: string;
+    data?: any;
 }

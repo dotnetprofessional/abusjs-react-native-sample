@@ -1,5 +1,5 @@
 import { Bootstrap } from "../../Config/Store";
-import { NavigationContext, Host } from '../../Host';
+import { WorkflowContext, Host } from '../../Host';
 
 export class BootstrapProcess {
     public static Actions = {
@@ -7,7 +7,7 @@ export class BootstrapProcess {
         error: "error"
     }
     public static processName = "BootstrapProcess";
-    public context: NavigationContext;
+    public context: WorkflowContext;
 
     //@handler(NavigationCommand.TYPE)
     async executeAsync(store: Bootstrap) {

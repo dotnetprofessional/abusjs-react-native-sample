@@ -1,5 +1,6 @@
 import { Authentication } from "../../Config/Store";
-import { NavigationContext } from '../../Host';
+import { WorkflowContext } from '../../Host';
+import {AreYouSureDialog} from '../../Components/AreYouSureDialog';
 
 export class AuthenticationProcess {
     public static Actions = {
@@ -8,13 +9,13 @@ export class AuthenticationProcess {
         error: "error"
     }
     public static processName = "AuthenticationProcess";
-    public context: NavigationContext;
+    public context: WorkflowContext;
 
     //@handler(NavigationCommand.TYPE)
-    execute(store: Authentication, username: string) {
+    async execute(store: Authentication, username: string) {
         // Do some work here and update the store!
         let workflowResult = "";
-        if (username === "a") {
+        if (username !== "a") {
             store.isAuthenticated = true;
             store.username = username;
             workflowResult = AuthenticationProcess.Actions.signedIn;
@@ -24,6 +25,7 @@ export class AuthenticationProcess {
         }
 
         // now complete fire a workflow result command
+        var result = await this.context.workflowDialogAsync(AreYouSureDialog.processName);
         this.context.workflowResult(workflowResult);
     }
 }

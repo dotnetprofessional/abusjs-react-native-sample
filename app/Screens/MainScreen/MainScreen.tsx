@@ -3,16 +3,16 @@ import {
     View,
     Text
 } from "react-native";
-import { NavProps } from "../../Host";
+import { ScreenProps } from "../../Host";
 
-export class MainScreen extends React.Component<NavProps, any> {
+export class MainScreen extends React.Component<ScreenProps, any> {
     public static Actions = {
         complete: "complete",
         error: "error"
     }
     public static processName = "MainScreen";
 
-    constructor(props: NavProps) {
+    constructor(props: ScreenProps) {
         super();
         this.props = props;
         debugger;
