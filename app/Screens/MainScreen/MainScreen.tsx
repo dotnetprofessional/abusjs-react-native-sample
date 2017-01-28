@@ -15,7 +15,6 @@ export class MainScreen extends React.Component<ScreenProps, any> {
     constructor(props: ScreenProps) {
         super();
         this.props = props;
-        debugger;
     }
     render(): JSX.Element {
         return (
@@ -24,4 +23,6 @@ export class MainScreen extends React.Component<ScreenProps, any> {
             </View>
         );
     }
+
+    
 }

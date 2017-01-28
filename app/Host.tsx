@@ -23,14 +23,15 @@ export class WorkflowContext {
     }
 
     async workflowDialogAsync(dialogName: string, data?: any) {
-        return this.context.sendAsync(new NavigationCommand(dialogName, data));
+        //return this.context.sendAsync(new NavigationCommand(dialogName, data));
     }
 }
 
 export class ScreenProps {
-    context: WorkflowContext;
+    messageContext: WorkflowContext;
     store: Store;
 }
+
 
 export class DialogProps {
     messageContext: MessageHandlerContext;
@@ -53,36 +54,32 @@ export class Host extends React.Component<void, any> {
 
         this._workflow = new Workflow(this._store, Bus.instance);
         this.navigationHandler = this.navigationHandler.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
         this.renderScene = this.renderScene.bind(this);
+        this.render = this.render.bind(this);
         Bus.instance.subscribe({ messageFilter: NavigationCommand.TYPE, handler: this.navigationHandler });
         Bus.instance.subscribe({ messageFilter: OpenDialogCommand.TYPE, handler: this.dialogHandler });
-
-        // Kick off the workflow
-        this._workflow.start();
     }
 
     renderScene(route: any, navigator: any) {
         switch (route.name) {
             case SplashScreen.processName:
-                return <SplashScreen context={new WorkflowContext(route.context, SplashScreen.processName)} store={this._store} />
+                return <SplashScreen messageContext={new WorkflowContext(route.context, SplashScreen.processName)} store={this._store} />
             case SignIn.processName:
-                return <SignIn context={new WorkflowContext(route.context, SignIn.processName)} store={this._store} />
+                return <SignIn messageContext={new WorkflowContext(route.context, SignIn.processName)} store={this._store} />
             case MainScreen.processName:
-                return <MainScreen context={new WorkflowContext(route.context, MainScreen.processName)} store={this._store} />
-            //default:
-            //    return <Screen1 navigator={navigator} />
+                return <MainScreen messageContext={new WorkflowContext(route.context, MainScreen.processName)} store={this._store} />
+            default:
+                throw TypeError("Unknown screen " + route.name);
         }
     }
 
     render(): JSX.Element {
         return (
-            <View>
                 <Navigator
                     ref={(ref: any) => { this._navigationInstance = ref; } }
-                    initialRoute={{ name: SplashScreen.processName, index: 0 }}
+                    initialRoute={{ name: SplashScreen.processName, context: new MessageHandlerContext(Bus.instance) }}
                     renderScene={this.renderScene} />
-                {this.state.showDialog ? this._activeDialog : null}
-            </View>
         );
     }
     //@handler(NavigationCommand.TYPE)
@@ -96,11 +93,17 @@ export class Host extends React.Component<void, any> {
     //@handler(NavigationCommand.TYPE)
     dialogHandler(message: NavigationRequest, context: MessageHandlerContext) {
         try {
+            debugger;
             this._activeDialog = <AreYouSureDialog messageContext={context} store={this._store} />
             this.setState({ showDialog: true });
         } catch (error) {
-            this.setState({ showDialog: false });
+            //this.setState({ showDialog: false });
         }
+    }
+
+    componentDidMount() {
+        // Kick off the workflow
+        this._workflow.start(new MessageHandlerContext(Bus.instance));
     }
 
     static sleep(ms: number) {

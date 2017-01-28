@@ -6,15 +6,20 @@ export class SignIn extends React.Component<ScreenProps, any> {
 
     constructor(props: ScreenProps) {
         super();
+        this.signIn = this.signIn.bind(this);
         this.props = props;
         this.state = { name: "" };
     }
+
     public static Actions = {
         signIn: "SignIn",
         signOut: "signOut",
         error: "error",
     }
 
+    signIn() {
+        this.props.messageContext.workflowResult(SignIn.Actions.signIn, this.state.name);
+    }
     public static processName = "SignIn";
 
     render(): JSX.Element {
@@ -27,7 +32,7 @@ export class SignIn extends React.Component<ScreenProps, any> {
                     value={this.state.name}
                     />
                 <Button
-                    onPress={() => this.props.context.workflowResult(SignIn.Actions.signIn, this.state.name)}
+                    onPress={this.signIn}
                     title="Learn More"
                     color="#841584"
                     accessibilityLabel="Learn more about this purple button"

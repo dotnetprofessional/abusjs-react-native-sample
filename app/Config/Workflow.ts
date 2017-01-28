@@ -30,9 +30,8 @@ export class Workflow {
      * 
      * @memberOf Workflow
      */
-    public start() {
-        this.context = new MessageHandlerContext(this.bus);
-        this.workflowCommandHandler(new WorkflowResult(), this.context);
+    public start(context: MessageHandlerContext) {
+        this.workflowCommandHandler(new WorkflowResult(), context);
     }
 
     navigate(screen: string) {

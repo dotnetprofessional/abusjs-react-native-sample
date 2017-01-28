@@ -12,7 +12,7 @@ export class BootstrapProcess {
     //@handler(NavigationCommand.TYPE)
     async executeAsync(store: Bootstrap) {
         for (let p = 0; p < 10; p++) {
-            await Host.sleep(200);
+            await Host.sleep(500);
             store.percerntComplete += 10;
         }
         this.context.workflowResult(BootstrapProcess.Actions.complete);

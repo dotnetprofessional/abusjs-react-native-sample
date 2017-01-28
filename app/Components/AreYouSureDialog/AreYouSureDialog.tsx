@@ -1,4 +1,4 @@
-import * as React from 'react-native';
+import * as React from 'react';
 import {View, Animated, Dimensions, Text, StyleSheet, Button} from "react-native";
 import { DialogProps } from "../../Host";
 
