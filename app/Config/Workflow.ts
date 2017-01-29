@@ -83,11 +83,13 @@ export class Workflow {
                         this.navigate(Signout.processName);
                         break;
                     case AuthenticationProcess.Actions.error:
-                        if (this.currentScreen === SignIn.processName) {
+                        // Leave user on the screen, an error message will be displayed
+                        /*if (this.currentScreen === SignIn.processName) {
                             // No need to do anything the UI will handle the error state
                         } else {
                             this.displayMessage(message.data);
                         }
+                        */
                         break;
 
                 }

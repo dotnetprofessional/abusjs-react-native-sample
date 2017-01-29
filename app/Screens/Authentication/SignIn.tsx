@@ -1,12 +1,14 @@
 import * as React from 'react';
+import {observer} from "mobx-react/native";
+
 import { View, Text, TextInput, Button } from "react-native";
 import { ScreenProps } from "../../Host";
 
+@observer
 export class SignIn extends React.Component<ScreenProps, any> {
 
     constructor(props: ScreenProps) {
         super();
-        this.signIn = this.signIn.bind(this);
         this.props = props;
         this.state = { name: "" };
     }
@@ -17,9 +19,7 @@ export class SignIn extends React.Component<ScreenProps, any> {
         error: "error",
     }
 
-    signIn() {
-        this.props.messageContext.workflowResult(SignIn.Actions.signIn, this.state.name);
-    }
+
     public static processName = "SignIn";
 
     render(): JSX.Element {
@@ -32,15 +32,13 @@ export class SignIn extends React.Component<ScreenProps, any> {
                     value={this.state.name}
                     />
                 <Button
-                    onPress={this.signIn}
+                    onPress={()=>this.props.messageContext.workflowResult(SignIn.Actions.signIn, this.state.name)}
                     title="Learn More"
                     color="#841584"
                     accessibilityLabel="Learn more about this purple button"
                     />
-            </View>
+                 <Text style={{color: 'red'}}>{this.props.store.authentication.displayMessage}</Text>
+           </View>
         );
     }
-
-    componentWillUnmount() {
-   }
 }
