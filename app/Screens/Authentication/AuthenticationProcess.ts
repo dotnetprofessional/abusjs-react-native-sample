@@ -6,6 +6,7 @@ export class AuthenticationProcess {
     public static Actions = {
         signedIn: "signedIn",
         signedOut: "signedOut",
+        cancel: "cancel",
         error: "error"
     }
     public static processName = "AuthenticationProcess";
@@ -15,16 +16,20 @@ export class AuthenticationProcess {
     async execute(store: Authentication, username: string) {
         // Do some work here and update the store!
         let workflowResult = "";
-        if (username === "a") {
-            store.isAuthenticated = true;
-            store.username = username;
-            workflowResult = AuthenticationProcess.Actions.signedIn;
+        var result = await this.context.workflowDialogAsync(AreYouSureDialog.processName, { text: "Are you sure you want to login??" });
+        if (result && result.response === "Yes") {
+            if (username !== "a") {
+                store.isAuthenticated = true;
+                store.username = username;
+                workflowResult = AuthenticationProcess.Actions.signedIn;
+            } else {
+                workflowResult = AuthenticationProcess.Actions.error;
+                store.isAuthenticated = false;
+            }
         } else {
-            store.isAuthenticated = false;
-            AuthenticationProcess.Actions.error;
+            workflowResult = AuthenticationProcess.Actions.cancel;
         }
-        debugger;
-        //var result = await this.context.workflowDialogAsync(AreYouSureDialog.processName);
+
         // now complete fire a workflow result command
         this.context.workflowResult(workflowResult);
     }

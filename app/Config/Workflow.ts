@@ -1,9 +1,9 @@
 import { Bus, MessageHandlerContext } from "abus";
 import { WorkflowResultCommand, WorkflowResult } from "../Config";
 import { NavigationCommand } from "../Infrastructure/Navigation";
-import { SplashScreen, BootstrapProcess, MainScreen, AuthenticationProcess, SignIn } from "../Screens";
+import { SplashScreen, BootstrapProcess, MainScreen, AuthenticationProcess, SignIn, Signout } from "../Screens";
 import { Store } from "../Config/Store";
-import { WorkflowContext } from "../Host";
+import { WorkflowContext, Host } from "../Host";
 
 /**
  * Defines how components talk to each other
@@ -36,6 +36,10 @@ export class Workflow {
 
     navigate(screen: string) {
         this.context.sendAsync(new NavigationCommand(screen));
+    }
+
+    navigateBack() {
+        this.context.sendAsync(new NavigationCommand(Host.Actions.back));
     }
 
     executeProcess<T>(processCommand: T): T {
@@ -74,6 +78,9 @@ export class Workflow {
                 switch (message.action) {
                     case AuthenticationProcess.Actions.signedIn:
                         this.navigate(MainScreen.processName);
+                        break;
+                    case AuthenticationProcess.Actions.cancel:
+                        this.navigate(Signout.processName);
                         break;
                     case AuthenticationProcess.Actions.error:
                         if (this.currentScreen === SignIn.processName) {

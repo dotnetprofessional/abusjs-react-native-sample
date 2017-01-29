@@ -7,10 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "abus": "file:../ABusJS/dist",
     "mobx": "^3.0.2",
     "mobx-react": "^4.1.0",
     "react": "~15.4.0-rc.4",
-    "abus": "file:../ABusJS/dist"
+    "react-native-animated-modal": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "0.0.0",

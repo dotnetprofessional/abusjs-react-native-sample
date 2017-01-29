@@ -40,4 +40,7 @@ export class SignIn extends React.Component<ScreenProps, any> {
             </View>
         );
     }
+
+    componentWillUnmount() {
+   }
 }
