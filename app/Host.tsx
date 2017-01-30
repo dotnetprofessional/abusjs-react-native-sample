@@ -13,6 +13,7 @@ import { NavigationCommand, NavigationRequest, OpenDialogCommand } from './Infra
 import { WorkflowResultCommand, Workflow } from "./Config";
 import { Store } from './Config/Store';
 import { AreYouSureDialog } from './Components/AreYouSureDialog';
+import {TrackMessagesTask, Tracking} from './TrackMessagesTask';
 
 export class WorkflowContext {
     constructor(public context: MessageHandlerContext, private process: string) {
@@ -76,6 +77,7 @@ export class Host extends React.Component<void, any> {
         this.render = this.render.bind(this);
         this._activeDialog = null;
 
+        Bus.instance.inBoundMessageTasks.add(new TrackMessagesTask());
         Bus.instance.subscribe({ messageFilter: NavigationCommand.TYPE, handler: this.navigationHandler });
         Bus.instance.subscribe({ messageFilter: OpenDialogCommand.TYPE, handler: this.dialogHandler });
     }
@@ -88,6 +90,9 @@ export class Host extends React.Component<void, any> {
         return this.getRenderScene(route);
     }
 
+    display() {
+        Tracking.display();
+    }
     getRenderScene(route: any) {
         switch (route.name) {
             case SplashScreen.processName:
@@ -152,7 +157,6 @@ export class Host extends React.Component<void, any> {
 
     //@handler(NavigationCommand.TYPE)
     dialogHandler(message: NavigationRequest, context: MessageHandlerContext) {
-        debugger;
         this._navigationInstance.push({
             type: "dialog",
             name: message.name,
