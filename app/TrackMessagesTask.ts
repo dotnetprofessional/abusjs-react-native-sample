@@ -39,11 +39,11 @@ export class Tracking {
     }
 
     static display() {
-        debugger;
         for (let property in this.__history) {
             if (this.__history.hasOwnProperty(property)) {
                 let writer = new TextWriter();
                 Tracking.printNode(this.__history[property], "", false, writer);
+                console.log("conversationId: " + property);
                 console.log(writer.display());
             }
         }
@@ -53,12 +53,12 @@ export class Tracking {
 
         writer.write(indent);
         if (last) {
-            writer.write("\\-");
+            writer.write("└╴");
             indent += "  ";
         }
         else {
-            writer.write("|-");
-            indent += "| ";
+            writer.write("├╴");
+            indent += "│ ";
         }
         writer.write(node.message.type);
         let message: any = node.message.message;
