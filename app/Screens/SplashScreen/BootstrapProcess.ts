@@ -1,5 +1,6 @@
 import { Bootstrap } from "../../Config/Store";
-import { WorkflowContext, Host } from '../../Host';
+import { Host } from '../../Host';
+import { WorkflowContext } from '../../Infrastructure/Workflow';
 
 export class BootstrapProcess {
     public static Actions = {

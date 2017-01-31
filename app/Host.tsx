@@ -8,51 +8,13 @@ import {
 import { handler, MessageHandlerContext, Bus } from "abus";
 
 import { SplashScreen, SignIn, MainScreen, Signout } from "./Screens";
+import { AreYouSureDialog } from './Components';
 
 import { NavigationCommand, NavigationRequest, OpenDialogCommand } from './Infrastructure/Navigation'
-import { WorkflowResultCommand, Workflow } from "./Config";
-import { Store } from './Config/Store';
-import { AreYouSureDialog } from './Components/AreYouSureDialog';
-import {TrackMessagesTask, Tracking} from './TrackMessagesTask';
+import { WorkflowResultCommand, WorkflowContext } from "./Infrastructure/Workflow";
+import { Workflow, Store } from "./Config";
 
-export class WorkflowContext {
-    constructor(public context: MessageHandlerContext, private process: string) {
-
-    }
-    workflowResult(action: string, data?: any) {
-        this.context.sendAsync(new WorkflowResultCommand(this.process, action, data));
-    }
-
-    async workflowDialogAsync(dialogName: string, data?: any) {
-        return this.context.sendAsync(new OpenDialogCommand(dialogName, data));
-    }
-}
-
-export class DialogContext {
-    constructor(public context: MessageHandlerContext, private navigator: Navigator) {
-
-    }
-    reply(data?: any) {
-        this.navigator.pop();
-        this.context.reply(data);
-    }
-
-    async workflowDialogAsync(dialogName: string, data?: any) {
-        return this.context.sendAsync(new OpenDialogCommand(dialogName, data));
-    }
-}
-
-export class ScreenProps {
-    messageContext: WorkflowContext;
-    store: Store;
-}
-
-
-export class DialogProps {
-    context: DialogContext;
-    data?: any;
-    store: Store;
-}
+import { TrackMessagesTask, Tracking } from './TrackMessagesTask';
 
 export class Host extends React.Component<void, any> {
 
@@ -75,7 +37,6 @@ export class Host extends React.Component<void, any> {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.renderScene = this.renderScene.bind(this);
         this.render = this.render.bind(this);
-        this._activeDialog = null;
 
         Bus.instance.inBoundMessageTasks.add(new TrackMessagesTask());
         Bus.instance.subscribe({ messageFilter: NavigationCommand.TYPE, handler: this.navigationHandler });

@@ -1,2 +1,2 @@
 export { Workflow } from './Workflow';
-export { WorkflowResultCommand, WorkflowResult } from './WorkflowResultCommand';
+export { Store } from "./Store";

@@ -1,10 +1,6 @@
-import {IMessage} from "abus";
+import { IMessage } from "abus";
+import { WorkflowResult } from "./WorkflowResult";
 
-export class WorkflowResult {
-    process: string;
-    action: string;
-    data?: any;
-}
 
 export class WorkflowResultCommand implements IMessage<WorkflowResult> {
     static TYPE = "WorkflowResultCommand";

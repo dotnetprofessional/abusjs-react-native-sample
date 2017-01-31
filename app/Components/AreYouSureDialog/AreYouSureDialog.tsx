@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { View, Animated, Dimensions, Text, StyleSheet, Button } from "react-native";
-import { DialogProps } from "../../Host";
+import { DialogProps } from "../../Infrastructure/Navigation";
+import {Store} from "../../Config";
 
-export class AreYouSureDialog extends React.Component<DialogProps, any>{
+export class AreYouSureDialog extends React.Component<DialogProps<Store>, any>{
     public static processName = "AreYouSureDialog";
 
     render(): JSX.Element {

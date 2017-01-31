@@ -1,5 +1,5 @@
 import { Authentication } from "../../Config/Store";
-import { WorkflowContext } from '../../Host';
+import { WorkflowContext } from '../../Infrastructure/Workflow';
 import { AreYouSureDialog } from '../../Components/AreYouSureDialog';
 
 export class AuthenticationProcess {
@@ -12,7 +12,6 @@ export class AuthenticationProcess {
     public static processName = "AuthenticationProcess";
     public context: WorkflowContext;
 
-    //@handler(NavigationCommand.TYPE)
     async execute(store: Authentication, username: string) {
         // Do some work here and update the store!
         let workflowResult = "";

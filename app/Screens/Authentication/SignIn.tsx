@@ -2,12 +2,13 @@ import * as React from 'react';
 import {observer} from "mobx-react/native";
 
 import { View, Text, TextInput, Button } from "react-native";
-import { ScreenProps } from "../../Host";
+import { ScreenProps } from "../../Infrastructure/Navigation";
+import {Store} from "../../Config";
 
 @observer
-export class SignIn extends React.Component<ScreenProps, any> {
+export class SignIn extends React.Component<ScreenProps<Store>, any> {
 
-    constructor(props: ScreenProps) {
+    constructor(props: ScreenProps<Store>) {
         super();
         this.props = props;
         this.state = { name: "" };

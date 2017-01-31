@@ -3,16 +3,17 @@ import {
     View,
     Text
 } from "react-native";
-import { ScreenProps } from "../../Host";
+import { ScreenProps } from "../../Infrastructure/Navigation";
+import {Store} from "../../Config";
 
-export class MainScreen extends React.Component<ScreenProps, any> {
+export class MainScreen extends React.Component<ScreenProps<Store>, any> {
     public static Actions = {
         complete: "complete",
         error: "error"
     }
     public static processName = "MainScreen";
 
-    constructor(props: ScreenProps) {
+    constructor(props: ScreenProps<Store>) {
         super();
         this.props = props;
     }

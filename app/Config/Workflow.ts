@@ -1,9 +1,9 @@
 import { Bus, MessageHandlerContext } from "abus";
-import { WorkflowResultCommand, WorkflowResult } from "../Config";
+import { WorkflowResultCommand, WorkflowResult, WorkflowContext } from "../Infrastructure/Workflow";
 import { NavigationCommand } from "../Infrastructure/Navigation";
 import { SplashScreen, BootstrapProcess, MainScreen, AuthenticationProcess, SignIn, Signout } from "../Screens";
 import { Store } from "../Config/Store";
-import { WorkflowContext, Host } from "../Host";
+import { Host } from "../Host";
 
 /**
  * Defines how components talk to each other

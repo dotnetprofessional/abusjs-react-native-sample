@@ -3,12 +3,13 @@ import { Bus, MessageHandlerContext } from "abus";
 import { View, Text, TouchableHighlight } from "react-native";
 import {observer} from "mobx-react/native";
 
-import { ScreenProps } from "../../Host";
-import { WorkflowResultCommand, Workflow, WorkflowResult } from "../../Config";
+import { ScreenProps } from "../../Infrastructure/Navigation";
+import { WorkflowResultCommand, WorkflowResult } from "../../Infrastructure/Workflow";
 import { AuthenticationProcess } from '../';
+import {Store, Workflow} from "../../Config";
 
 @observer
-export class SplashScreen extends React.Component<ScreenProps, any> {
+export class SplashScreen extends React.Component<ScreenProps<Store>, any> {
 
     public static processName = "SplashScreen";
     private subscriptionKey: string;
